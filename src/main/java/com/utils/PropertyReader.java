@@ -14,6 +14,7 @@ public class PropertyReader {
         Properties properties = new Properties();
         try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/generateConfiguration.properties")) {
             properties.load(fileInputStream);
+            AppContext.put("isArchive", properties.getProperty("generate.isArchive"));
             AppContext.put("path", properties.getProperty("generate.path"));
             AppContext.put("fileName", properties.getProperty("generate.fileName"));
             AppContext.put("fileType", properties.getProperty("generate.fileType"));

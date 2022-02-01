@@ -4,6 +4,7 @@ import com.enums.GenerateConditionType;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -38,12 +39,25 @@ public class Generator {
         }
     }
 
+    public void createFile(String directoryPath, String fileName, String fileType, Integer fileSizeInKb) {
+        try {
+            File file = generateHardFile(directoryPath, fileName, 1, fileType, fileSizeInKb);
+            System.out.println("File " + file.getName() + " was been created");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private static File generateHardFile(String directoryPath, String includesFileName, int currentFile, String fileType, Integer fileSizeInKB) {
         File file = new File(directoryPath + includesFileName + currentFile + fileType);
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            for (int z = 0; z < fileSizeInKB*1000; z++) {
-                fileOutputStream.write((int)Math.floor(Math.random()*(122-65+1)+65));
+            Random random = new Random();
+            FileWriter fileWriter = new FileWriter(file);
+            for (int z = 0; z < fileSizeInKB*1024; z++) {
+                fileWriter.write(random.nextInt(127));
+               // fileOutputStream.write((int)Math.floor(Math.random()*(122-65+1)+65));
             }
+            fileWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

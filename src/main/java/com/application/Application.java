@@ -10,22 +10,33 @@ public class Application {
         Generator generator = new Generator();
         PropertyReader reader = new PropertyReader();
         reader.loadAllProperties();
-        if (AppContext.get("generateConditionType", String.class).equalsIgnoreCase("HARD")) {
-            generator.createZIP(AppContext.get("path", String.class),
+        if (AppContext.get("generateConditionType", String.class).equalsIgnoreCase("HARD") && Boolean.parseBoolean(AppContext.get("isArchive", String.class))) {
+            generator.createZIP(
+                    AppContext.get("path", String.class),
                     AppContext.get("fileName", String.class),
                     AppContext.get("fileType", String.class),
                     AppContext.get("archiveName", String.class),
                     Integer.valueOf(AppContext.get("fileCount", String.class)),
                     Integer.valueOf(AppContext.get("fileSize", String.class)),
-                    GenerateConditionType.HARD);
+                    GenerateConditionType.HARD
+            );
+        } else if (!AppContext.get("generateConditionType", String.class).equalsIgnoreCase("HARD") && Boolean.parseBoolean(AppContext.get("isArchive", String.class))) {
+            generator.createZIP(
+                    AppContext.get("path", String.class),
+                    AppContext.get("fileName", String.class),
+                    AppContext.get("fileType", String.class),
+                    AppContext.get("archiveName", String.class),
+                    Integer.valueOf(AppContext.get("fileCount", String.class)),
+                    Integer.valueOf(AppContext.get("fileSize", String.class)),
+                    GenerateConditionType.SIMPLE
+            );
         } else {
-            generator.createZIP(AppContext.get("path", String.class),
+            generator.createFile(
+                    AppContext.get("path", String.class),
                     AppContext.get("fileName", String.class),
                     AppContext.get("fileType", String.class),
-                    AppContext.get("archiveName", String.class),
-                    Integer.valueOf(AppContext.get("fileCount", String.class)),
-                    Integer.valueOf(AppContext.get("fileSize", String.class)),
-                    GenerateConditionType.SIMPLE);
+                    Integer.valueOf(AppContext.get("fileSize", String.class))
+            );
         }
     }
 }
