@@ -1,6 +1,6 @@
 package com.application;
 
-import com.generater.Generator;
+import com.generator.Generator;
 import com.enums.GenerateConditionType;
 import com.utils.AppContext;
 import com.utils.PropertyReader;

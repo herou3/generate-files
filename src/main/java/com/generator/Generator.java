@@ -1,4 +1,4 @@
-package com.generater;
+package com.generator;
 
 import com.enums.GenerateConditionType;
 
@@ -50,12 +50,11 @@ public class Generator {
 
     private static File generateHardFile(String directoryPath, String includesFileName, int currentFile, String fileType, Integer fileSizeInKB) {
         File file = new File(directoryPath + includesFileName + currentFile + fileType);
-        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+        try {
             Random random = new Random();
             FileWriter fileWriter = new FileWriter(file);
             for (int z = 0; z < fileSizeInKB*1024; z++) {
                 fileWriter.write(random.nextInt(127));
-               // fileOutputStream.write((int)Math.floor(Math.random()*(122-65+1)+65));
             }
             fileWriter.close();
         } catch (Exception e) {
