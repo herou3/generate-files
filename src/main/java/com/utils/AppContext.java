@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class AppContext {
     private static AppContext instance;
-    private static Map<String, Object> context = new HashMap<>();
+    private final static Map<String, Object> context = new HashMap<>();
     private AppContext() {
     }
 

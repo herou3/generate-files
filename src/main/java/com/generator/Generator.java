@@ -9,13 +9,15 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Generator {
-    public void createZIP(String directoryPath, String includesFileName,  String fileType, String zipFileName, Integer countFiles, Integer fileSizeInKB, GenerateConditionType condition) {
+    private GenerateConditionType generateConditionType = GenerateConditionType.HARD;
+
+    public void createZIP(String directoryPath, String includesFileName, String fileType, String zipFileName, Integer countFiles, Integer fileSizeInKB) {
         try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(directoryPath + zipFileName + ".zip"))) {
             ZipEntry zipEntry;
             FileInputStream entryFile;
             for (int index = 0; countFiles > index; index++) {
                 File file;
-                switch (condition) {
+                switch (this.generateConditionType) {
                     case HARD:
                         file = generateHardFile(directoryPath, includesFileName, index, fileType, fileSizeInKB);
                         break;
@@ -73,6 +75,10 @@ public class Generator {
             e.printStackTrace();
         }
         return file;
+    }
+
+    public void setGenerateConditionType(GenerateConditionType generateConditionType) {
+        this.generateConditionType = generateConditionType;
     }
 }
 
